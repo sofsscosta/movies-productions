@@ -1,7 +1,13 @@
 <template>
   <div>
-    <ul>
-      <li v-for="person in people" :key="person.id">
+    <ul
+      class="flex flex-wrap flex-grow justify-center items-center content-center"
+    >
+      <li
+        v-for="person in people"
+        :key="person.id"
+        class="mt-5 mr-5 ml-5 mb-5 p-5 shadow border rounded sm:w-30 md:w-40 lg:w-32 xl:w-64"
+      >
         <div v-if="person.profile_path" :bind="person">
           <Result
             :title="person.name"
