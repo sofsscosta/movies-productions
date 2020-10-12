@@ -21,7 +21,7 @@ const mutations = {
     state.people = fetchedPeople
   },
   setSearched(state: State, searchedPeople: [Person]) {
-    state.people = searchedPeople
+    state.searchedPeople = searchedPeople
   },
   error(error: any) {
     state.error = error

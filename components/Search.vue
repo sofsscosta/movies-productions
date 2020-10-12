@@ -11,17 +11,17 @@
 </template>
 
 <script lang="ts">
-import { mapMutations, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   methods: {
     async search(query: string) {
-      this.$router.push('/search?' + query)
       const key = this.$store.state.env.key
-      await this['people/setSearched']({ query, key })
-      await this['movies/setSearched']({ query, key })
+      await this.$router.push('/search?' + query)
+      const parsedQuery = Object.keys(this.$router.currentRoute.query)[0]
+      await this['people/setSearched']({ query: parsedQuery, key })
+      await this['movies/setSearched']({ query: parsedQuery, key })
     },
-    ...mapMutations(['movies/set']),
     ...mapActions(['movies/setSearched', 'people/setSearched']),
   },
 }
