@@ -39,11 +39,9 @@ export default {
   computed: {
     ...mapState({
       searchedPeople: (state: any) => {
-        console.log(state.people.searchedPeople)
         return state.people.searchedPeople
       },
       searchedMovies: (state: any) => {
-        console.log(state.people.searchedPeople)
         return state.movies.searchedMovies
       },
       error: (state: any) => {
