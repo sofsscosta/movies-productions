@@ -10,25 +10,30 @@
 </template>
 
 <script lang="ts">
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 import { getImageUrl } from '../utils/getImageUrl'
+import Movie from '../models/movie'
+
+const key = process.env.API_KEY
 
 export default {
   async fetch({ store, error }) {
     try {
+      if (store.state.movies.movies.length) return store.state.movies.movies
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY}&page=1`
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
       )
-      if (res) store.commit('movies/init', res.data.results)
+      store.commit('movies/init', res.data.results)
     } catch (err) {
       error({ statusCode: 500, message: 'Opps, try again' })
     }
   },
 
-  data(img: string) {
+  data(movie: Movie) {
     return {
-      image: getImageUrl(img),
+      key,
+      image: () => getImageUrl(movie.poster_path),
     }
   },
 
@@ -42,6 +47,7 @@ export default {
 
   methods: {
     getImageUrl,
+    ...mapGetters(['movies/getTopRatedMovies']),
   },
 }
 </script>

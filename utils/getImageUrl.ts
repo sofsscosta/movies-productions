@@ -1,4 +1,3 @@
 export const getImageUrl = (image: string) => {
-  console.log('got here')
-  return `${process.env.IMG_URL}${image}`
+  return `https://image.tmdb.org/t/p/w500${image}`
 }
