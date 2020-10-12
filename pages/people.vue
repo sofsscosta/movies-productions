@@ -3,7 +3,11 @@
     <ul>
       <li v-for="person in people" :key="person.id">
         <div v-if="person.profile_path" :bind="person">
-          <Person />
+          <Result
+            :title="person.name"
+            :link="person.profile_path"
+            :image="person.profile_path"
+          />
         </div>
       </li>
     </ul>
@@ -13,11 +17,11 @@
 <script lang="ts">
 import { mapState, mapActions } from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
-import Person from '~/components/Person.vue'
+import Result from '~/components/Result.vue'
 
 export default {
   components: {
-    Person,
+    Result,
   },
   async fetch({ store }: any) {
     if (store.state.people.people.length) return store.state.people.people

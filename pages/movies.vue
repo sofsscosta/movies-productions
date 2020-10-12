@@ -3,7 +3,11 @@
     <ul>
       <li v-for="movie in movies" :key="movie.id">
         <div v-if="movie.poster_path" :bind="movie">
-          <Movie :movie="movie" />
+          <Result
+            :title="movie.title"
+            :link="movie.backdrop_path"
+            :image="movie.poster_path"
+          />
         </div>
       </li>
     </ul>
@@ -15,11 +19,11 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import { getImageUrl } from '../utils/getImageUrl'
 import getUrl from '../utils/getUrl'
-import Movie from '~/components/Movie.vue'
+import Result from '~/components/Result.vue'
 
 export default {
   components: {
-    Movie,
+    Result,
   },
   async fetch({ store }: any) {
     try {
