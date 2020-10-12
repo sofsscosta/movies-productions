@@ -20,8 +20,8 @@ const mutations = {
   set(state: State, fetchedMovies: [Movie]) {
     state.movies = fetchedMovies
   },
-  setSearched(state: State, fetchedMovies: [Movie]) {
-    state.searchedMovies = fetchedMovies
+  setSearched(state: State, searchedMovies: [Movie]) {
+    state.searchedMovies = searchedMovies
   },
   error(error: any) {
     state.error = error
@@ -37,12 +37,13 @@ const actions = {
       commit('error', err.message)
     }
   },
-  async setSearched({ commit }: any, query: string, key: string) {
+  async setSearched({ commit }: any, { query, key }: any) {
     try {
-      const res = await axios.get(
-        getUrl({ route: 'movie/top_rated', query, key })
+      if (!query.trim().length) return commit('setSearched', [])
+      const response = await axios.get(
+        getUrl({ route: 'search/movie', query, key })
       )
-      commit('setSearched', res.data.results)
+      commit('setSearched', response.data.results)
     } catch (err) {
       commit('error', err.message)
     }

@@ -13,10 +13,10 @@ const store = () =>
       async nuxtServerInit({ dispatch, commit }) {
         if (process.server) {
           commit('setEnv', {
-            API_KEY: process.env.API_KEY,
+            key: process.env.API_KEY,
           })
         }
-        await dispatch('movies/set', process.env.API_KEY)
+        await dispatch('movies/set', process.env.key)
       },
     },
     mutations: {

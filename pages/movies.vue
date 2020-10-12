@@ -15,7 +15,7 @@
           </div>
         </div>
       </li>
-      <li v-if="searchedMovies.length">
+      <li v-else>
         <div v-for="movie in searchedMovies" :key="movie.id">
           <div v-if="movie.poster_path" :bind="movie">
             <p>{{ movie.title }}</p>
@@ -44,7 +44,7 @@ export default {
     try {
       if (store.state.movies.movies.length) return store.state.movies.movies
       const res = await axios.get(
-        getUrl({ route: 'movie/top_rated', key: store.state.env.API_URL })
+        getUrl({ route: 'movie/top_rated', key: store.state.env.key })
       )
       store.commit('movies/set', res.data.results)
     } catch (err) {
@@ -55,11 +55,9 @@ export default {
   computed: {
     ...mapState({
       movies: (state: any) => {
-        console.log(state.movies.movies)
         return state.movies.movies
       },
       searchedMovies: (state: any) => {
-        console.log('searched', state.movies.searchedMovies)
         return state.movies.searchedMovies
       },
       error: (state: any) => {

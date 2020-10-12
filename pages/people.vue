@@ -20,7 +20,7 @@ import { getImageUrl } from '../utils/getImageUrl'
 export default {
   async fetch({ store }: any) {
     if (store.state.people.people.length) return store.state.people.people
-    return await store.dispatch('people/set', store.state.env.API_KEY)
+    return await store.dispatch('people/set', store.state.env.key)
   },
 
   computed: {
