@@ -1,45 +1,53 @@
 <template>
   <div>
-    <ul v-for="movie in movies" :key="movie">
-      <li>
-        <title>{{ movie.title }}</title>
+    <ul>
+      <li v-for="movie in movies" :key="movie.id">
+        <p>{{ movie.title }}</p>
+        <img :src="getImageUrl(movie.poster_path)" />
       </li>
-      <li></li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
+import { getImageUrl } from '../utils/getImageUrl'
+import Movie from '../models/movie'
+
+const key = process.env.API_KEY
 
 export default {
   async fetch({ store, error }) {
     try {
+      if (store.state.movies.movies.length) return store.state.movies.movies
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY}&page=1`
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
       )
-      console.log(res.data)
-      if (res) store.commit('init', res.data.results)
+      store.commit('movies/init', res.data.results)
     } catch (err) {
       error({ statusCode: 500, message: 'Opps, try again' })
     }
   },
 
-  data() {
+  data(movie: Movie) {
     return {
-      task: 'some task',
+      key,
+      image: () => getImageUrl(movie.poster_path),
     }
   },
 
   computed: {
     ...mapState({
-      movies: (state: any) => state.movies,
+      movies: (state: any) => {
+        return state.movies.movies
+      },
     }),
   },
 
   methods: {
-    ...mapActions(['add', 'remove', 'toggle']),
+    getImageUrl,
+    ...mapGetters(['movies/getTopRatedMovies']),
   },
 }
 </script>
