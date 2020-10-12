@@ -1,10 +1,11 @@
 <template>
-  <form class="pa3 pa5-ns">
-    <h1>Search</h1>
+  <form class="flex justify-center items-center flex-row">
+    <h1 class="font-hairline text-5xl pr-5">Search</h1>
     <input
       v-model="query"
       type="text"
       action="/search"
+      class="border rounded border-gray-500 w-56 h-12"
       @keyup="search(query)"
     />
   </form>
