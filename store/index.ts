@@ -10,8 +10,18 @@ const store = () =>
     },
     state,
     actions: {
-      async nuxtServerInit({ dispatch }) {
-        await dispatch('movies/init')
+      async nuxtServerInit({ dispatch, commit }) {
+        if (process.server) {
+          commit('setEnv', {
+            API_KEY: process.env.API_KEY,
+          })
+        }
+        await dispatch('movies/init', process.env.API_KEY)
+      },
+    },
+    mutations: {
+      setEnv(state, env) {
+        state.env = env
       },
     },
   })

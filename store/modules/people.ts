@@ -1,4 +1,5 @@
 import axios from 'axios'
+import getUrl from '../../utils/getUrl'
 import Person from '~/models/Person'
 
 export const state = {
@@ -25,13 +26,9 @@ const mutations = {
 const actions = {
   async init({ commit }: any, key: string) {
     try {
-      console.log('key', key)
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/person/popular?api_key=${key}&page=1`
-      )
+      const res = await axios.get(getUrl({ route: 'person/popular', key }))
       commit('init', res.data.results)
     } catch (err) {
-      console.log(err.message)
       commit('error', err.message)
     }
   },

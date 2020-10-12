@@ -13,16 +13,14 @@
 import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 import { getImageUrl } from '../utils/getImageUrl'
-// import Movie from '../models/movie'
+import getUrl from '../utils/getUrl'
 
 export default {
-  async fetch({ store, $config }: any) {
+  async fetch({ store }: any) {
     try {
-      console.log($config)
       if (store.state.movies.movies.length) return store.state.movies.movies
-      const key = $config.key
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
+        getUrl({ route: 'movie/top_rated', key: store.state.env.key })
       )
       store.commit('movies/init', res.data.results)
     } catch (err) {

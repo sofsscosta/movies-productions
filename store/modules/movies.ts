@@ -1,4 +1,5 @@
 import axios from 'axios'
+import getUrl from '../../utils/getUrl'
 import Movie from '~/models/Movie'
 
 export const state = {
@@ -23,14 +24,11 @@ const mutations = {
 }
 
 const actions = {
-  async init({ commit }: any, key: string | undefined = process.env.API_KEY) {
+  async init({ commit }: any, key: string) {
     try {
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
-      )
+      const res = await axios.get(getUrl({ route: 'movie/top_rated', key }))
       commit('init', res.data.results)
     } catch (err) {
-      console.log(err.message)
       commit('error', err.message)
     }
   },

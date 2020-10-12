@@ -14,11 +14,9 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
 
 export default {
-  async fetch({ store, $config }: any) {
-    console.log('$config', $config)
+  async fetch({ store }: any) {
     if (store.state.people.people.length) return store.state.people.people
-    const key = $config.key
-    return await store.dispatch('people/init', key)
+    return await store.dispatch('people/init', store.state.env.API_KEY)
   },
 
   computed: {
