@@ -1,5 +1,5 @@
 <template>
-  <form class="flex justify-center items-center flex-row">
+  <form class="flex justify-center items-center pt-5 pb-5">
     <h1 class="font-hairline text-5xl pr-5">Search</h1>
     <input
       v-model="query"
