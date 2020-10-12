@@ -18,7 +18,7 @@ import Movie from '../models/movie'
 const key = process.env.API_KEY
 
 export default {
-  async fetch({ store, error }) {
+  async fetch({ store }) {
     try {
       if (store.state.movies.movies.length) return store.state.movies.movies
       const res = await axios.get(
@@ -26,7 +26,7 @@ export default {
       )
       store.commit('movies/init', res.data.results)
     } catch (err) {
-      error({ statusCode: 500, message: 'Opps, try again' })
+      store.commit('movies/error', err)
     }
   },
 
@@ -39,8 +39,11 @@ export default {
 
   computed: {
     ...mapState({
-      movies: (state: any) => {
+      movies: (state: State) => {
         return state.movies.movies
+      },
+      error: (state: State) => {
+        return state.movies.error
       },
     }),
   },

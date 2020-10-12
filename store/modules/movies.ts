@@ -1,13 +1,15 @@
-import Movie from '~/models/movie'
+import Movie from '~/models/Movie'
 
 export const state = {
   movies: [],
   favouriteMovies: [],
+  error,
 }
 
 type State = {
   movies: [Movie]
   favouriteMovies: [Movie]
+  error: string
 }
 
 const mutations = {
@@ -16,7 +18,12 @@ const mutations = {
   },
 }
 
-const actions = {}
+const actions = {
+  setError({ error, commit }: any) {
+    state.error = error
+    commit('error', error)
+  },
+}
 
 const getters = {
   getTopRatedMovies(movies: [Movie]) {
