@@ -1,34 +1,11 @@
 <template>
   <div>
     <ul>
-      <div v-if="!searchedMovies.length">
-        <li v-for="movie in movies" :key="movie.id">
-          <div v-if="movie.poster_path" :bind="movie">
-            <p>{{ movie.title }}</p>
-            <a
-              :bind="movie"
-              :href="'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path"
-              target="_blank"
-            >
-              <img :src="getImageUrl(movie.poster_path)" />
-            </a>
-          </div>
-        </li>
-      </div>
-      <div v-else>
-        <li v-for="movie in searchedMovies" :key="movie.id">
-          <div v-if="movie.poster_path" :bind="movie">
-            <p>{{ movie.title }}</p>
-            <a
-              :bind="movie"
-              :href="'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path"
-              target="_blank"
-            >
-              <img :src="getImageUrl(movie.poster_path)" />
-            </a>
-          </div>
-        </li>
-      </div>
+      <li v-for="movie in movies" :key="movie.id">
+        <div v-if="movie.poster_path" :bind="movie">
+          <Movie :movie="movie" />
+        </div>
+      </li>
     </ul>
   </div>
 </template>
@@ -38,8 +15,12 @@ import { mapState } from 'vuex'
 import axios from 'axios'
 import { getImageUrl } from '../utils/getImageUrl'
 import getUrl from '../utils/getUrl'
+import Movie from '~/components/Movie.vue'
 
 export default {
+  components: {
+    Movie,
+  },
   async fetch({ store }: any) {
     try {
       if (store.state.movies.movies.length) return store.state.movies.movies
@@ -56,9 +37,6 @@ export default {
     ...mapState({
       movies: (state: any) => {
         return state.movies.movies
-      },
-      searchedMovies: (state: any) => {
-        return state.movies.searchedMovies
       },
       error: (state: any) => {
         return state.movies.error
