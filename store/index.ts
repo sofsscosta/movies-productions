@@ -9,6 +9,11 @@ const store = () =>
       people,
     },
     state,
+    actions: {
+      async nuxtServerInit({ dispatch }) {
+        await dispatch('movies/init')
+      },
+    },
   })
 
 export default store

@@ -13,14 +13,14 @@
 import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 import { getImageUrl } from '../utils/getImageUrl'
-import Movie from '../models/movie'
-
-const key = process.env.API_KEY
+// import Movie from '../models/movie'
 
 export default {
-  async fetch({ store }) {
+  async fetch({ store, $config }: any) {
     try {
+      console.log($config)
       if (store.state.movies.movies.length) return store.state.movies.movies
+      const key = $config.key
       const res = await axios.get(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
       )
@@ -30,19 +30,12 @@ export default {
     }
   },
 
-  data(movie: Movie) {
-    return {
-      key,
-      image: () => getImageUrl(movie.poster_path),
-    }
-  },
-
   computed: {
     ...mapState({
-      movies: (state: State) => {
+      movies: (state: any) => {
         return state.movies.movies
       },
-      error: (state: State) => {
+      error: (state: any) => {
         return state.movies.error
       },
     }),

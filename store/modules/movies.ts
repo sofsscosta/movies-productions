@@ -1,9 +1,10 @@
+import axios from 'axios'
 import Movie from '~/models/Movie'
 
 export const state = {
   movies: [],
   favouriteMovies: [],
-  error,
+  error: Error,
 }
 
 type State = {
@@ -16,12 +17,22 @@ const mutations = {
   init(state: State, fetchedMovies: [Movie]) {
     state.movies = fetchedMovies
   },
+  error(error: any) {
+    state.error = error
+  },
 }
 
 const actions = {
-  setError({ error, commit }: any) {
-    state.error = error
-    commit('error', error)
+  async init({ commit }: any, key: string | undefined = process.env.API_KEY) {
+    try {
+      const res = await axios.get(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
+      )
+      commit('init', res.data.results)
+    } catch (err) {
+      console.log(err.message)
+      commit('error', err.message)
+    }
   },
 }
 

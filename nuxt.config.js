@@ -32,4 +32,12 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+
+  env: {
+    key: process.env.API_KEY,
+  },
+
+  privateRuntimeConfig: {
+    key: process.env.API_KEY,
+  },
 }

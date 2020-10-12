@@ -17,27 +17,24 @@ const mutations = {
   init(state: State, fetchedPeople: [Person]) {
     state.people = fetchedPeople
   },
-}
-
-const setError = ({ error, commit }: any) => {
-  if (error) {
-    this.error = error
-    commit('error', error)
-  }
+  error(error: any) {
+    state.error = error
+  },
 }
 
 const actions = {
-  async setPeople({ commit }: any) {
+  async init({ commit }: any, key: string) {
     try {
+      console.log('key', key)
       const res = await axios.get(
-        `https://api.themoviedb.org/3/people/popular?api_key=${key}&page=1`
+        `https://api.themoviedb.org/3/person/popular?api_key=${key}&page=1`
       )
       commit('init', res.data.results)
     } catch (err) {
-      setError(err)
+      console.log(err.message)
+      commit('error', err.message)
     }
   },
-  setError,
 }
 
 const getters = {
