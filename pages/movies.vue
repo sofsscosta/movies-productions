@@ -13,27 +13,18 @@
 import { mapState, mapGetters } from 'vuex'
 import axios from 'axios'
 import { getImageUrl } from '../utils/getImageUrl'
-import Movie from '../models/movie'
-
-const key = process.env.API_KEY
+import getUrl from '../utils/getUrl'
 
 export default {
-  async fetch({ store, error }) {
+  async fetch({ store }: any) {
     try {
       if (store.state.movies.movies.length) return store.state.movies.movies
       const res = await axios.get(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${key}&page=1`
+        getUrl({ route: 'movie/top_rated', key: store.state.env.key })
       )
       store.commit('movies/init', res.data.results)
     } catch (err) {
-      error({ statusCode: 500, message: 'Opps, try again' })
-    }
-  },
-
-  data(movie: Movie) {
-    return {
-      key,
-      image: () => getImageUrl(movie.poster_path),
+      store.commit('movies/error', err)
     }
   },
 
@@ -41,6 +32,9 @@ export default {
     ...mapState({
       movies: (state: any) => {
         return state.movies.movies
+      },
+      error: (state: any) => {
+        return state.movies.error
       },
     }),
   },

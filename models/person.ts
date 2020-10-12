@@ -1,4 +1,4 @@
-import Movie from './movie'
+import Movie from './Movie'
 
 /* eslint-disable camelcase */
 export default class Person {
