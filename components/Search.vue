@@ -1,5 +1,6 @@
 <template>
   <form class="pa3 pa5-ns">
+    <h1>Search</h1>
     <input
       v-model="query"
       type="text"
@@ -14,12 +15,11 @@ import { mapMutations, mapActions } from 'vuex'
 
 export default {
   methods: {
-    search(query: string) {
+    async search(query: string) {
       this.$router.push('/search?' + query)
       const key = this.$store.state.env.key
-      console.log('key in compo', key)
-      this['movies/setSearched']({ query, key })
-      this['people/setSearched']({ query, key })
+      await this['people/setSearched']({ query, key })
+      await this['movies/setSearched']({ query, key })
     },
     ...mapMutations(['movies/set']),
     ...mapActions(['movies/setSearched', 'people/setSearched']),

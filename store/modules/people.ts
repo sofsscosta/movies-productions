@@ -4,12 +4,14 @@ import Person from '~/models/Person'
 
 export const state = {
   people: [],
+  searchedPeople: [],
   favouritePeople: [],
   error: Error,
 }
 
 type State = {
   people: [Person]
+  searchedPeople: [Person]
   favouritePeople: [Person]
   error: string
 }
@@ -39,7 +41,7 @@ const actions = {
     try {
       if (!query.trim().length) return commit('setSearched', [])
       const response = await axios.get(
-        getUrl({ route: 'search/people', query, key })
+        getUrl({ route: 'search/person', query, key })
       )
       commit('setSearched', response.data.results)
     } catch (err) {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul>
-      <li v-if="!searchedMovies.length">
-        <div v-for="movie in movies" :key="movie.id">
+      <div v-if="!searchedMovies.length">
+        <li v-for="movie in movies" :key="movie.id">
           <div v-if="movie.poster_path" :bind="movie">
             <p>{{ movie.title }}</p>
             <a
@@ -13,10 +13,10 @@
               <img :src="getImageUrl(movie.poster_path)" />
             </a>
           </div>
-        </div>
-      </li>
-      <li v-else>
-        <div v-for="movie in searchedMovies" :key="movie.id">
+        </li>
+      </div>
+      <div v-else>
+        <li v-for="movie in searchedMovies" :key="movie.id">
           <div v-if="movie.poster_path" :bind="movie">
             <p>{{ movie.title }}</p>
             <a
@@ -27,8 +27,8 @@
               <img :src="getImageUrl(movie.poster_path)" />
             </a>
           </div>
-        </div>
-      </li>
+        </li>
+      </div>
     </ul>
   </div>
 </template>

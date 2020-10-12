@@ -4,7 +4,7 @@
       <li v-for="person in people" :key="person.id">
         <div v-if="person.profile_path" :bind="person">
           <p>{{ person.name }}</p>
-          <a :bind="person" href="person.backdrop_path">
+          <a :bind="person" href="person.profile_path">
             <img :src="getImageUrl(person.profile_path)" />
           </a>
         </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
 
 export default {
@@ -36,8 +36,7 @@ export default {
 
   methods: {
     getImageUrl,
-    ...mapGetters(['people/getPopularPeople']),
-    ...mapActions(['people/get']),
+    ...mapActions(['people/set']),
   },
 }
 </script>
