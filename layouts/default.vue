@@ -1,7 +1,7 @@
 <template>
   <div>
-    <AppNav />
     <Search />
+    <AppNav />
     <Nuxt />
   </div>
 </template>
