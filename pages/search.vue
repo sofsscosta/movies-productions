@@ -1,41 +1,49 @@
 <template>
   <div>
-    <ul>
-      <li v-for="movie in searchedMovies" :key="movie.id">
-        <div v-if="movie.poster_path" :bind="movie">
-          <p>{{ movie.title }}</p>
-          <a
-            :bind="movie"
-            :href="'https://image.tmdb.org/t/p/w500/' + movie.backdrop_path"
-            target="_blank"
-          >
-            <img :src="getImageUrl(movie.poster_path)" />
-          </a>
-        </div>
-      </li>
-    </ul>
-    <ul>
-      <li v-for="person in searchedPeople" :key="person.id">
-        <div v-if="person.profile_path" :bind="person">
-          <p>{{ person.name }}</p>
-          <a
-            :bind="person"
-            target="_blank"
-            :href="'https://image.tmdb.org/t/p/w500/' + person.profile_path"
-          >
-            <img :src="getImageUrl(person.profile_path)" />
-          </a>
-        </div>
-      </li>
-    </ul>
+    <h1 class="category">Showing Results for: {{ query }}</h1>
+    <div class="flex flex-row flex-wrap justify-around">
+      <div class="flex-column flex-wrap w-2/5 content-start justify-center">
+        <h1 class="category">Movies</h1>
+        <ul class="flex flex-wrap justify-center items-center content-center">
+          <li v-for="movie in searchedMovies" :key="movie.id">
+            <div v-if="movie.poster_path" :bind="movie">
+              <Result
+                :title="movie.title"
+                :link="movie.backdrop_path"
+                :image="movie.poster_path"
+              />
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="flex-column flex-wrap w-2/5 content-start justify-center">
+        <h1 class="category">People</h1>
+        <ul class="flex flex-wrap justify-center items-center content-center">
+          <li v-for="person in searchedPeople" :key="person.id">
+            <div v-if="person.profile_path" :bind="person">
+              <Result
+                :title="person.name"
+                :link="person.profile_path"
+                :image="person.profile_path"
+              />
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { mapState } from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
+import Result from '~/components/Result.vue'
 
 export default {
+  components: {
+    Result,
+  },
+  props: ['query'],
   computed: {
     ...mapState({
       searchedPeople: (state: any) => {
@@ -54,3 +62,9 @@ export default {
   },
 }
 </script>
+
+<style lang="postcss" scoped>
+.category {
+  @apply flex text-center self-center justify-center text-2xl font-thin items-center;
+}
+</style>

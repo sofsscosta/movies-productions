@@ -3,11 +3,7 @@
     <ul
       class="flex flex-wrap flex-grow justify-center items-center content-center"
     >
-      <li
-        v-for="movie in movies"
-        :key="movie.id"
-        class="mt-5 mr-5 ml-5 mb-5 p-5 shadow border rounded sm:w-2 md:w-40 lg:w-1/4 xl:w-64"
-      >
+      <li v-for="movie in movies" :key="movie.id">
         <div v-if="movie.poster_path" :bind="movie">
           <Result
             :title="movie.title"

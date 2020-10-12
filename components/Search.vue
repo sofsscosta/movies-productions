@@ -19,9 +19,9 @@ export default {
     async search(query: string) {
       const key = this.$store.state.env.key
       await this.$router.push('/search?' + query)
-      const parsedQuery = Object.keys(this.$router.currentRoute.query)[0]
-      await this['people/setSearched']({ query: parsedQuery, key })
-      await this['movies/setSearched']({ query: parsedQuery, key })
+      //   const parsedQuery = Object.keys(this.$router.currentRoute.query)[0]
+      await this['people/setSearched']({ query, key })
+      await this['movies/setSearched']({ query, key })
     },
     ...mapActions(['movies/setSearched', 'people/setSearched']),
   },
