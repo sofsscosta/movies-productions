@@ -4,19 +4,24 @@ import Movie from '~/models/Movie'
 
 export const state = {
   movies: [],
+  searchedMovies: [],
   favouriteMovies: [],
   error: Error,
 }
 
 type State = {
   movies: [Movie]
+  searchedMovies: [Movie]
   favouriteMovies: [Movie]
   error: string
 }
 
 const mutations = {
-  init(state: State, fetchedMovies: [Movie]) {
+  set(state: State, fetchedMovies: [Movie]) {
     state.movies = fetchedMovies
+  },
+  setSearched(state: State, fetchedMovies: [Movie]) {
+    state.searchedMovies = fetchedMovies
   },
   error(error: any) {
     state.error = error
@@ -24,10 +29,20 @@ const mutations = {
 }
 
 const actions = {
-  async init({ commit }: any, key: string) {
+  async set({ commit }: any, key: string) {
     try {
       const res = await axios.get(getUrl({ route: 'movie/top_rated', key }))
-      commit('init', res.data.results)
+      commit('set', res.data.results)
+    } catch (err) {
+      commit('error', err.message)
+    }
+  },
+  async setSearched({ commit }: any, query: string, key: string) {
+    try {
+      const res = await axios.get(
+        getUrl({ route: 'movie/top_rated', query, key })
+      )
+      commit('setSearched', res.data.results)
     } catch (err) {
       commit('error', err.message)
     }

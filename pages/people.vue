@@ -2,8 +2,12 @@
   <div>
     <ul>
       <li v-for="person in people" :key="person.id">
-        <p>{{ person.name }}</p>
-        <img :src="getImageUrl(person.profile_path)" />
+        <div v-if="person.profile_path" :bind="person">
+          <p>{{ person.name }}</p>
+          <a :bind="person" href="person.backdrop_path">
+            <img :src="getImageUrl(person.profile_path)" />
+          </a>
+        </div>
       </li>
     </ul>
   </div>
@@ -16,7 +20,7 @@ import { getImageUrl } from '../utils/getImageUrl'
 export default {
   async fetch({ store }: any) {
     if (store.state.people.people.length) return store.state.people.people
-    return await store.dispatch('people/init', store.state.env.API_KEY)
+    return await store.dispatch('people/set', store.state.env.API_KEY)
   },
 
   computed: {
@@ -33,7 +37,7 @@ export default {
   methods: {
     getImageUrl,
     ...mapGetters(['people/getPopularPeople']),
-    ...mapActions(['people/init']),
+    ...mapActions(['people/get']),
   },
 }
 </script>

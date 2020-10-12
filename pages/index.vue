@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1 class="link dim black f6 f5-ns dib mr3">Movies Productions</h1>
-  </div>
+  <Movies />
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Movies from './movies.vue'
 
-export default Vue.extend({})
+export default {
+  components: {
+    Movies,
+  },
+}
 </script>

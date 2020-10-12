@@ -16,7 +16,7 @@ const store = () =>
             API_KEY: process.env.API_KEY,
           })
         }
-        await dispatch('movies/init', process.env.API_KEY)
+        await dispatch('movies/set', process.env.API_KEY)
       },
     },
     mutations: {

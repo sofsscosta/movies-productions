@@ -15,7 +15,7 @@ type State = {
 }
 
 const mutations = {
-  init(state: State, fetchedPeople: [Person]) {
+  set(state: State, fetchedPeople: [Person]) {
     state.people = fetchedPeople
   },
   error(error: any) {
@@ -24,10 +24,10 @@ const mutations = {
 }
 
 const actions = {
-  async init({ commit }: any, key: string) {
+  async set({ commit }: any, key: string) {
     try {
       const res = await axios.get(getUrl({ route: 'person/popular', key }))
-      commit('init', res.data.results)
+      commit('set', res.data.results)
     } catch (err) {
       commit('error', err.message)
     }
