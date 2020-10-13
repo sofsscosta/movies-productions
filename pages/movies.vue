@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <ul
-      class="flex flex-wrap flex-grow justify-center items-center content-center"
-    >
-      <li v-for="movie in movies" :key="movie.id">
-        <div v-if="movie.poster_path && movie.backdrop_path" :bind="movie">
-          <Result
-            :title="movie.title"
-            :link="movie.backdrop_path"
-            :image="movie.poster_path"
-          />
-        </div>
-      </li>
-    </ul>
-  </div>
+  <ul
+    class="flex flex-wrap flex-grow justify-center items-center content-center"
+  >
+    <li v-for="movie in movies" :key="movie.id">
+      <div v-if="movie.poster_path && movie.backdrop_path" :bind="movie">
+        <Result
+          :title="movie.title"
+          :link="movie.backdrop_path"
+          :image="movie.poster_path"
+        />
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">

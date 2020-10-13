@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <ul
-      class="flex flex-wrap flex-grow justify-center items-center content-center"
-    >
-      <li v-for="person in people" :key="person.id">
-        <div v-if="person.profile_path" :bind="person">
-          <Result
-            :title="person.name"
-            :link="person.profile_path"
-            :image="person.profile_path"
-          />
-        </div>
-      </li>
-    </ul>
-  </div>
+  <ul
+    class="flex flex-wrap flex-grow justify-center items-center content-center"
+  >
+    <li v-for="person in people" :key="person.id">
+      <div v-if="person.profile_path" :bind="person">
+        <Result
+          :title="person.name"
+          :link="person.profile_path"
+          :image="person.profile_path"
+        />
+      </div>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
@@ -26,7 +24,7 @@ export default {
     Result,
   },
 
-  fetch({ store }: any) {
+  fetch({ store }) {
     if (store.state.people.people.length) return store.state.people.people
     return store.dispatch('people/SET', store.state.env.key)
   },

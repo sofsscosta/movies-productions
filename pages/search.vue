@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 <template>
   <div>
     <h1 class="category">Results</h1>
