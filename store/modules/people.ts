@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { ActionTree, MutationTree } from 'vuex'
 import getUrl from '../../utils/getUrl'
-import { SEARCH_PEOPLE, SET_PEOPLE } from '../action-types'
+import { GET_SEARCH, GET } from '../action-types'
+import { SET_SEARCH, SET } from '../mutation-types'
 import Person from '~/models/Person'
 
 export const state = () => ({
-  people: [] as Person[],
+  popular: [] as Person[],
   searchedPeople: [] as Person[],
   error: undefined as string | undefined,
 })
@@ -13,38 +14,34 @@ export const state = () => ({
 type RootState = ReturnType<typeof state>
 
 const mutations: MutationTree<RootState> = {
-  set(state: RootState, fetchedPeople: [Person]) {
-    state.people = fetchedPeople
+  [SET](state: RootState, fetchedPeople: [Person]) {
+    state.popular = fetchedPeople
   },
-  setSearched(state: RootState, searchedPeople: [Person]) {
+  [SET_SEARCH](state: RootState, searchedPeople: [Person]) {
     state.searchedPeople = searchedPeople
-  },
-  error(state: RootState, error: any) {
-    state.error = error
   },
 }
 
 const actions: ActionTree<RootState, RootState> = {
-  async [SET_PEOPLE]({ commit }, key: string) {
+  async [GET]({ commit }, key: string) {
     try {
       const res = await axios.get(getUrl({ route: 'person/popular', key }))
-      commit('set', res.data.results)
-    } catch (err) {
-      commit('error', err.message)
+      commit(SET, res.data.results)
+    } catch (error) {
+      throw new Error(error.message)
     }
   },
-  async [SEARCH_PEOPLE]({ commit }: any, { query, key }: any) {
+  async [GET_SEARCH]({ commit }: any, { query, key }: any) {
     try {
       if (!query.trim().length) {
-        commit('setSearched', [])
-        throw new Error('No results for people')
+        return commit(SET_SEARCH, [])
       }
       const response = await axios.get(
         getUrl({ route: 'search/person', query, key })
       )
-      commit('setSearched', response.data.results)
-    } catch (err) {
-      commit('error', err.message)
+      commit(SET_SEARCH, response.data.results)
+    } catch (error) {
+      throw new Error(error.message)
     }
   },
 }
