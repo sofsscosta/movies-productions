@@ -4,7 +4,7 @@
       class="flex flex-wrap flex-grow justify-center items-center content-center"
     >
       <li v-for="movie in movies" :key="movie.id">
-        <div v-if="movie.poster_path" :bind="movie">
+        <div v-if="movie.poster_path && movie.backdrop_path" :bind="movie">
           <Result
             :title="movie.title"
             :link="movie.backdrop_path"
@@ -19,6 +19,7 @@
 <script lang="ts">
 import { mapState } from 'vuex'
 import axios from 'axios'
+import { Context } from '@nuxt/types'
 import { getImageUrl } from '../utils/getImageUrl'
 import getUrl from '../utils/getUrl'
 import Result from '~/components/Result.vue'
@@ -27,7 +28,7 @@ export default {
   components: {
     Result,
   },
-  async fetch({ store }: any) {
+  async fetch({ store }: Context): Promise<void> {
     try {
       if (store.state.movies.movies.length) return store.state.movies.movies
       const res = await axios.get(

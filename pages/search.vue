@@ -1,12 +1,13 @@
+/* eslint-disable no-console */
 <template>
   <div>
-    <h1 class="category">Showing Results for: {{ query }}</h1>
+    <h1 class="category">Results</h1>
     <div class="flex flex-row flex-wrap justify-around">
       <div class="flex-column flex-wrap w-2/5 content-start justify-center">
         <h1 class="category">Movies</h1>
         <ul class="flex flex-wrap justify-center items-center content-center">
           <li v-for="movie in searchedMovies" :key="movie.id">
-            <div v-if="movie.poster_path" :bind="movie">
+            <div v-if="movie.poster_path && movie.backdrop_path" :bind="movie">
               <Result
                 :title="movie.title"
                 :link="movie.backdrop_path"
@@ -43,7 +44,6 @@ export default {
   components: {
     Result,
   },
-  props: ['query'],
   computed: {
     ...mapState({
       searchedPeople: (state: any) => {
@@ -52,8 +52,11 @@ export default {
       searchedMovies: (state: any) => {
         return state.movies.searchedMovies
       },
-      error: (state: any) => {
-        return state.movies.error
+      errorMovies: (state: any) => {
+        return state.movies.state.error
+      },
+      errorPeople: (state: any) => {
+        return state.people.error
       },
     }),
   },

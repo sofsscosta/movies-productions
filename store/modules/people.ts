@@ -1,35 +1,31 @@
 import axios from 'axios'
+import { ActionTree, MutationTree } from 'vuex'
 import getUrl from '../../utils/getUrl'
+import { SEARCH_PEOPLE, SET_PEOPLE } from '../action-types'
 import Person from '~/models/Person'
 
-export const state = {
-  people: [],
-  searchedPeople: [],
-  favouritePeople: [],
-  error: Error,
-}
+export const state = () => ({
+  people: [] as Person[],
+  searchedPeople: [] as Person[],
+  error: undefined as string | undefined,
+})
 
-type State = {
-  people: [Person]
-  searchedPeople: [Person]
-  favouritePeople: [Person]
-  error: string
-}
+type RootState = ReturnType<typeof state>
 
-const mutations = {
-  set(state: State, fetchedPeople: [Person]) {
+const mutations: MutationTree<RootState> = {
+  set(state: RootState, fetchedPeople: [Person]) {
     state.people = fetchedPeople
   },
-  setSearched(state: State, searchedPeople: [Person]) {
+  setSearched(state: RootState, searchedPeople: [Person]) {
     state.searchedPeople = searchedPeople
   },
-  error(error: any) {
+  error(state: RootState, error: any) {
     state.error = error
   },
 }
 
-const actions = {
-  async set({ commit }: any, key: string) {
+const actions: ActionTree<RootState, RootState> = {
+  async [SET_PEOPLE]({ commit }, key: string) {
     try {
       const res = await axios.get(getUrl({ route: 'person/popular', key }))
       commit('set', res.data.results)
@@ -37,9 +33,12 @@ const actions = {
       commit('error', err.message)
     }
   },
-  async setSearched({ commit }: any, { query, key }: any) {
+  async [SEARCH_PEOPLE]({ commit }: any, { query, key }: any) {
     try {
-      if (!query.trim().length) return commit('setSearched', [])
+      if (!query.trim().length) {
+        commit('setSearched', [])
+        throw new Error('No results for people')
+      }
       const response = await axios.get(
         getUrl({ route: 'search/person', query, key })
       )
@@ -50,16 +49,9 @@ const actions = {
   },
 }
 
-const getters = {
-  getPopularPeople(people: [Person]) {
-    return people
-  },
-}
-
 export const people = {
   namespaced: true,
-  state: () => state,
+  state,
   mutations,
   actions,
-  getters,
 }
