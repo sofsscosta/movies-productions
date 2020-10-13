@@ -6,12 +6,15 @@
     "lib": [
       "ESNext",
       "ESNext.AsyncIterable",
-      "DOM"
+      "DOM",
+      "es2015"
     ],
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
+    "declaration": true,
+    "outDir": "dist",
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
@@ -25,12 +28,14 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/types"
+      "@nuxt/types",
+      "jest"
     ]
   },
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
+    "**/*.spec.ts"
   ]
 }

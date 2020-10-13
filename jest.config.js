@@ -1,4 +1,6 @@
 module.exports = {
+  roots: ['<rootDir>/test'],
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
