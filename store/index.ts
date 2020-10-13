@@ -1,15 +1,17 @@
-import Vuex from 'vuex'
+import Vuex, { ActionTree, ModuleTree, MutationTree } from 'vuex'
 import { movies, people } from './modules'
 import state from './state'
 
+export type RootState = ReturnType<typeof state>
+
 const store = () =>
   new Vuex.Store({
-    modules: {
+    modules: <ModuleTree<any>>{
       movies,
       people,
     },
     state,
-    actions: {
+    actions: <ActionTree<RootState, RootState>>{
       async nuxtServerInit({ dispatch, commit }) {
         if (process.server) {
           commit('setEnv', {
@@ -19,7 +21,7 @@ const store = () =>
         await dispatch('movies/set', process.env.key)
       },
     },
-    mutations: {
+    mutations: <MutationTree<RootState>>{
       setEnv(state, env) {
         state.env = env
       },

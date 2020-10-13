@@ -4,7 +4,6 @@
     <input
       v-model="query"
       type="text"
-      action="/search"
       class="border rounded border-gray-500 w-56 h-12"
       @keyup="search(query)"
     />
