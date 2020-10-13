@@ -31,7 +31,7 @@ const actions: ActionTree<RootState, RootState> = {
       throw new Error(error.message)
     }
   },
-  async [GET_SEARCH]({ commit }: any, { query, key }: any) {
+  async [GET_SEARCH]({ commit }, { query, key }) {
     try {
       if (!query.trim().length) {
         return commit(SET_SEARCH, [])
