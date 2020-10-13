@@ -17,13 +17,9 @@
 </template>
 
 <script lang="ts">
-import {
-  mapState,
-  // mapActions
-} from 'vuex'
+import { mapState } from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
 import Result from '~/components/Result.vue'
-// import { SET } from '~/store/action-types'
 
 export default {
   components: {

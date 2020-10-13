@@ -17,34 +17,13 @@
 </template>
 
 <script lang="ts">
-import {
-  mapState,
-  // mapActions, mapMutations
-} from 'vuex'
-// import axios from 'axios'
-// import { Context } from '@nuxt/types'
-// import { getImageUrl } from '~/utils/getImageUrl'
-// import getUrl from '~/utils/getUrl'
+import { mapState } from 'vuex'
 import Result from '~/components/Result.vue'
-// import { SET } from '~/store/action-types'
-// import { ERROR } from '~/store/mutation-types'
 
 export default {
   components: {
     Result,
   },
-  // async fetch({ store }: Context): Promise<void> {
-  //   try {
-  //     if (store.state.movies.movies.length) return store.state.movies.movies
-  //     const res = await axios.get(
-  //       getUrl({ route: 'movie/top_rated', key: store.state.env.key })
-  //     )
-  //     store.dispatch('movies/SET', res.data.results)
-  //     // this.set(res.data.results)
-  //   } catch (err) {
-  //     this.error(err.message)
-  //   }
-  // },
 
   computed: {
     ...mapState({
@@ -56,11 +35,5 @@ export default {
       },
     }),
   },
-
-  // methods: {
-  //   getImageUrl,
-  // ...mapActions('movies', { set: SET }),
-  // ...mapMutations('movies', { error: ERROR }),
-  // },
 }
 </script>
