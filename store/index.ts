@@ -5,6 +5,26 @@ import state from './state'
 
 export type RootState = ReturnType<typeof state>
 
+const mutations: MutationTree<RootState> = {
+  [SET_ENV](state, env) {
+    state.env = env
+  },
+  [SET_QUERY](state, query) {
+    state.query = query
+  },
+}
+
+const actions: ActionTree<RootState, RootState> = {
+  async nuxtServerInit({ dispatch, commit }) {
+    if (process.server) {
+      commit(SET_ENV, {
+        key: process.env.API_KEY,
+      })
+    }
+    await dispatch('movies/GET', process.env.key)
+  },
+}
+
 const store = () =>
   new Vuex.Store({
     modules: <ModuleTree<any>>{
@@ -12,24 +32,8 @@ const store = () =>
       people,
     },
     state,
-    actions: <ActionTree<RootState, RootState>>{
-      async nuxtServerInit({ dispatch, commit }) {
-        if (process.server) {
-          commit(SET_ENV, {
-            key: process.env.API_KEY,
-          })
-        }
-        await dispatch('movies/GET', process.env.key)
-      },
-    },
-    mutations: <MutationTree<RootState>>{
-      [SET_ENV](state, env) {
-        state.env = env
-      },
-      [SET_QUERY](state, query) {
-        state.query = query
-      },
-    },
+    actions,
+    mutations,
   })
 
 export default store
