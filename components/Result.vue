@@ -12,10 +12,24 @@
 </template>
 
 <script lang="ts">
+import { PropOptions } from 'vue'
 import { getImageUrl } from '../utils/getImageUrl'
 
 export default {
-  props: ['title', 'link', 'image'],
+  props: {
+    title: {
+      type: String,
+      required: true,
+    } as PropOptions<string>,
+    link: {
+      type: String,
+      required: true,
+    } as PropOptions<string>,
+    image: {
+      type: String,
+      required: true,
+    } as PropOptions<string>,
+  },
   methods: {
     getImageUrl,
   },
