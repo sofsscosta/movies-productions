@@ -1,6 +1,8 @@
 <template>
   <div>
-    <ul>
+    <ul
+      class="flex flex-wrap flex-grow justify-center items-center content-center"
+    >
       <li v-for="person in people" :key="person.id">
         <div v-if="person.profile_path" :bind="person">
           <Result

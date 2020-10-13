@@ -1,6 +1,8 @@
 <template>
   <div>
-    <ul>
+    <ul
+      class="flex flex-wrap flex-grow justify-center items-center content-center"
+    >
       <li v-for="movie in movies" :key="movie.id">
         <div v-if="movie.poster_path" :bind="movie">
           <Result
