@@ -1,20 +1,7 @@
 # movies-productions
 
-## Build Setup
+Movies Productions is a small website that allows users to consult Top Rated Movies and Popular People in the cinema world. Moreover, it allows users to search dynamically for movies and people. 
 
-```bash
-# install dependencies
-$ npm install
+Movies Productions supports search directly made by address bar.
 
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+This app is build using Vue with Nuxt, Typescript and Tailwind CSS.

@@ -33,8 +33,9 @@ export default {
     if (
       this.$router.currentRoute.path === '/search' &&
       this.$router.currentRoute.query &&
-      !Array.isArray(this.$router.currentRoute.query.q) &&
-      this.$router.currentRoute.query.q.length
+      this.$router.currentRoute.query.q &&
+      this.$router.currentRoute.query.q.length &&
+      !Array.isArray(this.$router.currentRoute.query.q)
     ) {
       this.search(this.$router.currentRoute.query.q)
     }
