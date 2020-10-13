@@ -20,10 +20,16 @@ const store = () =>
         }
         await dispatch('movies/SET', process.env.key)
       },
+      setQuery({ commit }, query: string) {
+        commit('setQuery', query)
+      },
     },
     mutations: <MutationTree<RootState>>{
       setEnv(state, env) {
         state.env = env
+      },
+      setQuery(state, query) {
+        state.query = query
       },
     },
   })

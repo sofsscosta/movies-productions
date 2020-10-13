@@ -18,6 +18,7 @@
 import { mapState } from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
 import Result from '~/components/Result.vue'
+import Person from '~/models/Person'
 
 export default {
   components: {
@@ -25,17 +26,16 @@ export default {
   },
 
   fetch({ store }) {
-    if (store.state.people.people.length) return store.state.people.people
+    if (store.state.people.popular.length) return store.state.people.popular
     return store.dispatch('people/SET', store.state.env.key)
   },
 
   computed: {
     ...mapState({
-      people: (state: any) => {
-        return state.people.people
-      },
-      error: (state: any) => {
-        return state.people.error
+      people: (state: any): Person[] => {
+        return state.people.popular.filter(
+          (person: Person) => person.profile_path
+        )
       },
     }),
   },

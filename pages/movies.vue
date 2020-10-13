@@ -17,6 +17,7 @@
 <script lang="ts">
 import { mapState } from 'vuex'
 import Result from '~/components/Result.vue'
+import Movie from '~/models/Movie'
 
 export default {
   components: {
@@ -25,11 +26,10 @@ export default {
 
   computed: {
     ...mapState({
-      movies: (state: any) => {
-        return state.movies.movies
-      },
-      error: (state: any) => {
-        return state.movies.error
+      movies: (state: any): Movie[] => {
+        return state.movies.topRated.filter(
+          (movie: Movie) => movie.poster_path && movie.backdrop_path
+        )
       },
     }),
   },
