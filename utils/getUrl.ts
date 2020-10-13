@@ -1,7 +1,7 @@
 type arguments = {
   route: string
   key: string
-  query: string
+  query?: string
 }
 
 const getUrl = ({ route, key, query = '' }: arguments): string => {
