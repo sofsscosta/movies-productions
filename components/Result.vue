@@ -5,7 +5,7 @@
         {{ title }}
       </p>
     </div>
-    <a :href="'https://image.tmdb.org/t/p/w500/' + link" target="_blank">
+    <a :href="getImageUrl(image)" target="_blank">
       <img :src="getImageUrl(image)" class="sm:w-full md:w-56 m-auto" />
     </a>
   </div>
@@ -13,7 +13,10 @@
 
 <script lang="ts">
 import { PropOptions } from 'vue'
-import { getImageUrl } from '../utils/getImageUrl'
+
+const getImageUrl = (image: string) => {
+  return `https://image.tmdb.org/t/p/w500${image}`
+}
 
 export default {
   props: {
