@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import { mapState } from 'vuex'
-import { getImageUrl } from '../utils/getImageUrl'
 import Result from '~/components/Result.vue'
 import Person from '~/models/Person'
 
@@ -38,10 +37,6 @@ export default {
         )
       },
     }),
-  },
-
-  methods: {
-    getImageUrl,
   },
 }
 </script>

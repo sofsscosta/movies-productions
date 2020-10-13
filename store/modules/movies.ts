@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ActionTree, MutationTree } from 'vuex'
+import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { GET_SEARCH, GET } from '../action-types'
 import { SET_SEARCH, SET } from '../mutation-types'
 import getUrl from '../../utils/getUrl'
@@ -43,9 +43,14 @@ const actions: ActionTree<RootState, RootState> = {
   },
 }
 
+const getters: GetterTree<RootState, RootState> = {
+  getSearchedMovies: (state) => state.searchedMovies,
+}
+
 export const movies = {
   namespaced: true,
   state,
   mutations,
   actions,
+  getters,
 }

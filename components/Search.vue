@@ -16,6 +16,8 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable no-undef */
+/* eslint-disable valid-typeof */
 import { mapMutations, createNamespacedHelpers } from 'vuex'
 import { GET_SEARCH } from '~/store/action-types'
 import { SET_QUERY } from '~/store/mutation-types'
@@ -27,10 +29,21 @@ export default {
   data() {
     return { query: '' }
   },
+  mounted() {
+    if (
+      this.$router.currentRoute.path === '/search' &&
+      this.$router.currentRoute.query &&
+      this.$router.currentRoute.query.q &&
+      this.$router.currentRoute.query.q.length &&
+      !Array.isArray(this.$router.currentRoute.query.q)
+    ) {
+      this.search(this.$router.currentRoute.query.q)
+    }
+  },
   methods: {
     async search(query: string) {
       const key = this.$store.state.env.key
-      await this.$router.push('?' + query)
+      await this.$router.push('?q=' + query)
       await this.setQuery(query)
       await this.getMoviesSearch({ query, key })
       await this.getPeopleSearch({ query, key })
