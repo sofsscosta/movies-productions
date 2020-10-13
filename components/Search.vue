@@ -14,15 +14,17 @@
 import { mapActions } from 'vuex'
 
 export default {
+  data() {
+    return { query: '' }
+  },
   methods: {
     async search(query: string) {
       const key = this.$store.state.env.key
       await this.$router.push('/search?' + query)
-      //   const parsedQuery = Object.keys(this.$router.currentRoute.query)[0]
-      await this['people/setSearched']({ query, key })
-      await this['movies/setSearched']({ query, key })
+      await this['people/SET_SEARCHED']({ query, key })
+      await this['movies/SET_SEARCHED']({ query, key })
     },
-    ...mapActions(['movies/setSearched', 'people/setSearched']),
+    ...mapActions(['movies/SET_SEARCHED', 'people/SET_SEARCHED']),
   },
 }
 </script>

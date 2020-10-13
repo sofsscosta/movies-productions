@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { ActionTree, MutationTree } from 'vuex'
+import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import getUrl from '../../utils/getUrl'
-import { SEARCH_PEOPLE, SET_PEOPLE } from '../action-types'
+import { SET_SEARCHED, SET } from '../action-types'
+import { SAVE_SEARCHED, SAVE, ERROR } from '../mutation-types'
 import Person from '~/models/Person'
 
 export const state = () => ({
@@ -13,40 +14,45 @@ export const state = () => ({
 type RootState = ReturnType<typeof state>
 
 const mutations: MutationTree<RootState> = {
-  set(state: RootState, fetchedPeople: [Person]) {
+  [SAVE](state: RootState, fetchedPeople: [Person]) {
     state.people = fetchedPeople
   },
-  setSearched(state: RootState, searchedPeople: [Person]) {
+  [SAVE_SEARCHED](state: RootState, searchedPeople: [Person]) {
     state.searchedPeople = searchedPeople
   },
-  error(state: RootState, error: any) {
+  [ERROR](state: RootState, error: any) {
     state.error = error
   },
 }
 
 const actions: ActionTree<RootState, RootState> = {
-  async [SET_PEOPLE]({ commit }, key: string) {
+  async [SET]({ commit }, key: string) {
     try {
       const res = await axios.get(getUrl({ route: 'person/popular', key }))
-      commit('set', res.data.results)
+      commit(SAVE, res.data.results)
     } catch (err) {
-      commit('error', err.message)
+      commit(ERROR, err.message)
     }
   },
-  async [SEARCH_PEOPLE]({ commit }: any, { query, key }: any) {
+
+  async [SET_SEARCHED]({ commit }: any, { query, key }: any) {
     try {
       if (!query.trim().length) {
-        commit('setSearched', [])
+        commit(SAVE_SEARCHED, [])
         throw new Error('No results for people')
       }
       const response = await axios.get(
         getUrl({ route: 'search/person', query, key })
       )
-      commit('setSearched', response.data.results)
+      commit(SAVE_SEARCHED, response.data.results)
     } catch (err) {
-      commit('error', err.message)
+      commit(ERROR, err.message)
     }
   },
+}
+
+const getters: GetterTree<RootState, RootState> = {
+  getSearchedPeople: (state) => state.searchedPeople,
 }
 
 export const people = {
@@ -54,4 +60,5 @@ export const people = {
   state,
   mutations,
   actions,
+  getters,
 }

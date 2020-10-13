@@ -18,7 +18,7 @@ const store = () =>
             key: process.env.API_KEY,
           })
         }
-        await dispatch('movies/set', process.env.key)
+        await dispatch('movies/SET', process.env.key)
       },
     },
     mutations: <MutationTree<RootState>>{

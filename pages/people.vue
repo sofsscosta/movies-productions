@@ -17,17 +17,22 @@
 </template>
 
 <script lang="ts">
-import { mapState, mapActions } from 'vuex'
+import {
+  mapState,
+  // mapActions
+} from 'vuex'
 import { getImageUrl } from '../utils/getImageUrl'
 import Result from '~/components/Result.vue'
+// import { SET } from '~/store/action-types'
 
 export default {
   components: {
     Result,
   },
-  async fetch({ store }: any) {
+
+  fetch({ store }: any) {
     if (store.state.people.people.length) return store.state.people.people
-    return await store.dispatch('people/set', store.state.env.key)
+    return store.dispatch('people/SET', store.state.env.key)
   },
 
   computed: {
@@ -43,7 +48,6 @@ export default {
 
   methods: {
     getImageUrl,
-    ...mapActions(['people/set']),
   },
 }
 </script>
