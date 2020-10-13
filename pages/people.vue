@@ -27,7 +27,7 @@ export default {
 
   fetch({ store }) {
     if (store.state.people.popular.length) return store.state.people.popular
-    return store.dispatch('people/SET', store.state.env.key)
+    return store.dispatch('people/GET', store.state.env.key)
   },
 
   computed: {

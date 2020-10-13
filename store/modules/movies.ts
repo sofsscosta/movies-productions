@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ActionTree, MutationTree } from 'vuex'
-import { SET_SEARCHED, SET } from '../action-types'
-import { SAVE_SEARCHED, SAVE } from '../mutation-types'
+import { GET_SEARCH, GET } from '../action-types'
+import { SET_SEARCH, SET } from '../mutation-types'
 import getUrl from '../../utils/getUrl'
 import Movie from '~/models/Movie'
 
@@ -13,30 +13,30 @@ export const state = () => ({
 type RootState = ReturnType<typeof state>
 
 const mutations: MutationTree<RootState> = {
-  [SAVE](state: RootState, fetchedMovies: [Movie]) {
+  [SET](state: RootState, fetchedMovies: [Movie]) {
     state.topRated = fetchedMovies
   },
-  [SAVE_SEARCHED](state: RootState, searchedMovies: [Movie]) {
+  [SET_SEARCH](state: RootState, searchedMovies: [Movie]) {
     state.searchedMovies = searchedMovies
   },
 }
 
 const actions: ActionTree<RootState, RootState> = {
-  async [SET]({ commit }, key: string) {
+  async [GET]({ commit }, key: string) {
     try {
       const res = await axios.get(getUrl({ route: 'movie/top_rated', key }))
-      commit(SAVE, res.data.results)
+      commit(SET, res.data.results)
     } catch (error) {
       throw new Error(error.message)
     }
   },
-  async [SET_SEARCHED]({ commit }, { query, key }) {
+  async [GET_SEARCH]({ commit }, { query, key }) {
     try {
-      if (!query.trim().length) return commit(SAVE_SEARCHED, [])
+      if (!query.trim().length) return commit(SET_SEARCH, [])
       const response = await axios.get(
         getUrl({ route: 'search/movie', query, key })
       )
-      commit(SAVE_SEARCHED, response.data.results)
+      commit(SET_SEARCH, response.data.results)
     } catch (error) {
       throw new Error(error.message)
     }

@@ -16,7 +16,12 @@
 </template>
 
 <script lang="ts">
-import { mapActions } from 'vuex'
+import { mapMutations, createNamespacedHelpers } from 'vuex'
+import { GET_SEARCH } from '~/store/action-types'
+import { SET_QUERY } from '~/store/mutation-types'
+
+const { mapActions: mapMovieActions } = createNamespacedHelpers('movies')
+const { mapActions: mapPeopleActions } = createNamespacedHelpers('people')
 
 export default {
   data() {
@@ -27,10 +32,18 @@ export default {
       const key = this.$store.state.env.key
       await this.$router.push('?' + query)
       await this.setQuery(query)
-      await this['people/SET_SEARCHED']({ query, key })
-      await this['movies/SET_SEARCHED']({ query, key })
+      await this.getMoviesSearch({ query, key })
+      await this.getPeopleSearch({ query, key })
     },
-    ...mapActions(['movies/SET_SEARCHED', 'people/SET_SEARCHED', 'setQuery']),
+    ...mapMovieActions({
+      getMoviesSearch: GET_SEARCH,
+    }),
+    ...mapPeopleActions({
+      getPeopleSearch: GET_SEARCH,
+    }),
+    ...mapMutations({
+      setQuery: SET_QUERY,
+    }),
   },
 }
 </script>

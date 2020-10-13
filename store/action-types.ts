@@ -1,2 +1,3 @@
-export const SET = `SET`
-export const SET_SEARCHED = `SET_SEARCHED`
+export const GET = `GET`
+export const GET_SEARCH = `GET_SEARCH`
+export const GET_ENV = `GET_ENV`
